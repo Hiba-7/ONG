@@ -6,11 +6,13 @@ use Livewire\Component;
 use Filament\Tables;
 use App\Enums\TypeCotisationEnum;
 use App\Models\Cotisation;
+use App\Models\Paiement;
 use App\Models\Module;
 use App\Models\User;
 use Filament\Tables\Columns\TextColumn;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\View\View;
+use Illuminate\Contracts\Pagination\Paginator;
 
 class ProfilePaiment extends Component implements Tables\Contracts\HasTable
 {
@@ -19,7 +21,7 @@ class ProfilePaiment extends Component implements Tables\Contracts\HasTable
 
     protected function getTableQuery(): Builder
     {
-        return Cotisation::query();
+        return Paiement::where('user_id', auth()->id())->whereYear('created_at', '!=', now()->year);
     }
     protected function getTableColumns(): array
 
@@ -27,41 +29,28 @@ class ProfilePaiment extends Component implements Tables\Contracts\HasTable
 
         return [
 
-            TextColumn::make('année')->label('Date')->sortable(),
+            TextColumn::make('created_at')->label('Date')->sortable(),
 
-            TextColumn::make('nom')->sortable(),
+            TextColumn::make('cotisation.type')->label('Nom')->sortable(),
 
-            TextColumn::make('description')->sortable(),
-            TextColumn::make('date_formation')->label('Date formation')->sortable(),
-            TextColumn::make('nom_formateur')->label('Formateur')->sortable(),
+            TextColumn::make('description')->label('Description')->sortable(),
+
+            TextColumn::make('cotisation.montant')->label('Total')->sortable()
 
 
         ];
     }
 
-
+    protected function paginateTableQuery(Builder $query): Paginator
+    {
+        return $query->simplePaginate($this->getTableRecordsPerPage() == -1 ? $query->count() : $this->getTableRecordsPerPage());
+    }
 
     public function render(): View
     {
-        $user = auth()->user();
-        // we get the last cotisation of the user
-        // cotisation simple can be either local or foreign
-        // cotisation speciale is a special cotisation related to an instance
-        // we get the last cotisation of each type
-
-        $cotisation_simple = $user->cotisations()->where('type', TypeCotisationEnum::SIMPLE_LOCAL)->orWhere('type', TypeCotisationEnum::SIMPLE_ETRANGER)->orderBy('created_at', 'desc')->first();
-        $cotisation_speciale = $user->cotisations()->where('type', TypeCotisationEnum::SPECIAL)->orderBy('created_at', 'desc')->orderBy('created_at', 'desc')->first();
-        // we check if the cotisation is payed
-        $est_payee = $cotisation_simple->est_paye ?? false;
-        $est_payee_speciale = $cotisation_speciale->est_paye ?? false;
-
-        // we get the montant of the cotisation
-        $montant_simple = $cotisation_simple->montant ?? 0;
-        $montant_speciale = $cotisation_speciale->montant ?? 0;
-
-
-
-
-        return view('livewire.components.profile-paiment', compact('user', 'montant_simple', 'montant_speciale', 'est_payee', 'est_payee_speciale'));
+        $user = User::find(auth()->id());
+        // $carte = User::find($id)->carte;
+        $current_cotisations = $user->paiements()->whereYear('created_at', now()->year)->get();
+        return view('livewire.components.profile-paiment', compact('user', 'current_cotisations'));
     }
 }
