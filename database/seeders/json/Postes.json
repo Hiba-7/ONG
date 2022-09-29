@@ -1,0 +1,94 @@
+[
+    {
+        "nom": "Président",
+        "instance_id": 1
+    },
+    {
+        "nom": "Vice de président",
+        "instance_id": 1
+    },
+    {
+        "nom": "Chargé de cabinet",
+        "instance_id": 1
+    },
+    {
+        "nom": "Participant",
+        "instance_id": 2
+    },
+    {
+        "nom": "Président de bureau",
+        "instance_id": 2
+    },
+    {
+        "nom": "Secrétaire du bureau",
+        "instance_id": 2
+    },
+    {
+        "nom": "Secrétaire du bureau",
+        "instance_id": 2
+    },
+    {
+        "nom": "Membre du bureau",
+        "instance_id": 2
+    },
+    {
+        "nom": "Secrétaire",
+        "instance_id": 3
+    },
+    {
+        "nom": "Membre",
+        "instance_id": 3
+    },
+    {
+        "nom": "Président du conseil",
+        "instance_id": 4
+    },
+    {
+        "nom": "Secrétaire du conseil",
+        "instance_id": 4
+    },
+    {
+        "nom": "Président de commistion",
+        "instance_id": 4
+    },
+    {
+        "nom": "Membre pricipale de la commission",
+        "instance_id": 4
+    },
+    {
+        "nom": "Membre de la commission",
+        "instance_id": 4
+    },
+    {
+        "nom": "Premier secrétaire",
+        "instance_id": 5
+    },
+    {
+        "nom": "Secrétaire formation",
+        "instance_id": 5
+    },
+    {
+        "nom": "Secrétaire finance",
+        "instance_id": 5
+    },
+    {
+        "nom": "Secrétaire organisation",
+        "instance_id": 5
+    },
+    {
+        "nom": "Secrétaire relations",
+        "instance_id": 5
+    },
+    {
+        "nom": "Secrétaire digital",
+        "instance_id": 5
+    },
+    {
+        "nom": "Secrétaire communication",
+        "instance_id": 5
+    },
+    {
+        "nom": "Secrétaire délégué",
+        "instance_id": 5
+    }
+]

@@ -1,0 +1,27 @@
+[
+    {
+    "nom": "formation 1",
+    "niveau": 1,
+    "description": "Description de la 1er formation"
+    },
+    {
+        "nom": "formation 2",
+        "niveau": 2,
+        "description": "Description de la 2eme formation"
+    },
+    {
+        "nom": "formation 3",
+        "niveau": 3,
+        "description": "Description de la 3eme formation"
+    },
+    {
+        "nom": "formation 4",
+        "niveau": 4,
+        "description": "Description de la 4eme formation"
+    }, 
+    {
+        "nom": "formation 5",
+        "niveau": 5,
+        "description": "Description de la 5eme formation"
+    }
+]

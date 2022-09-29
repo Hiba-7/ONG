@@ -1,0 +1,37 @@
+[
+    {
+        "lieu_formation": "Paris",
+        "nom_formateur": "formateur 1",
+        "module_id": 1
+    },
+    {
+        "lieu_formation": "Paris",
+        "nom_formateur": "formateur 12",
+        "module_id": 4
+    },
+    {
+        "lieu_formation": "Algerie",
+        "nom_formateur": "formateur 2",
+        "module_id": 6
+    },
+    {
+        "lieu_formation": "France",
+        "nom_formateur": "formateur 3",
+        "module_id": 11
+    },
+    {
+        "lieu_formation": "KSA",
+        "nom_formateur": "formateur 4",
+        "module_id": 16
+    },
+    {
+        "lieu_formation": "Angola",
+        "nom_formateur": "formateur 5",
+        "module_id": 21
+    },
+    {
+        "lieu_formation": "Angola",
+        "nom_formateur": "formateur 5",
+        "module_id": 20
+    }
+]

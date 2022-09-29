@@ -1,0 +1,22 @@
+[
+    {
+        "nom": "présidence",
+        "est_virtuelle": 1
+    },
+    {
+        "nom": "Congrès",
+        "est_virtuelle": 1
+    },
+    {
+        "nom": "Conseil national",
+        "est_virtuelle": 1
+    },
+    {
+        "nom": "Conseil scientifique",
+        "est_virtuelle": 1
+    },
+    {
+        "nom": "Secretariat nationale",
+        "est_virtuelle": 1
+    }
+]

@@ -1,0 +1,156 @@
+[
+    {
+        "nom": "module 1",
+        "numero": 1,
+        "description": "Description de la 1er module",
+        "formation_id": 1
+    },
+    {
+        "nom": "module 2",
+        "numero": 2,
+        "description": "Description de la 2eme module",
+        "formation_id": 1
+    },
+    {
+        "nom": "module 3",
+        "numero": 3,
+        "description": "Description de la 3eme module",
+        "formation_id": 1
+    },
+    {
+        "nom": "module 4",
+        "numero": 4,
+        "description": "Description de la 4eme module",
+        "formation_id": 1
+    },
+    {
+        "nom": "module 5",
+        "numero": 5,
+        "description": "Description de la 5eme module",
+        "formation_id": 1
+    },
+
+    {
+        "nom": "module 1",
+        "numero": 1,
+        "description": "Description de la 1er module",
+        "formation_id": 2
+    },
+    {
+        "nom": "module 2",
+        "numero": 2,
+        "description": "Description de la 2eme module",
+        "formation_id": 2
+    },
+    {
+        "nom": "module 3",
+        "numero": 3,
+        "description": "Description de la 3eme module",
+        "formation_id": 2
+    },
+    {
+        "nom": "module 4",
+        "numero": 4,
+        "description": "Description de la 4eme module",
+        "formation_id": 2
+    },
+    {
+        "nom": "module 5",
+        "numero": 5,
+        "description": "Description de la 5eme module",
+        "formation_id": 2
+    }
+,
+    {
+        "nom": "module 1",
+        "numero": 1,
+        "description": "Description de la 1er module",
+        "formation_id": 3
+    },
+    {
+        "nom": "module 2",
+        "numero": 2,
+        "description": "Description de la 2eme module",
+        "formation_id": 3
+    },
+    {
+        "nom": "module 3",
+        "numero": 3,
+        "description": "Description de la 3eme module",
+        "formation_id": 3
+    },
+    {
+        "nom": "module 4",
+        "numero": 4,
+        "description": "Description de la 4eme module",
+        "formation_id": 3
+    },
+    {
+        "nom": "module 5",
+        "numero": 5,
+        "description": "Description de la 5eme module",
+        "formation_id": 3
+    }
+    ,
+    {
+        "nom": "module 1",
+        "numero": 1,
+        "description": "Description de la 1er module",
+        "formation_id": 4
+    },
+    {
+        "nom": "module 2",
+        "numero": 2,
+        "description": "Description de la 2eme module",
+        "formation_id": 4
+    },
+    {
+        "nom": "module 3",
+        "numero": 3,
+        "description": "Description de la 3eme module",
+        "formation_id": 4
+    },
+    {
+        "nom": "module 4",
+        "numero": 4,
+        "description": "Description de la 4eme module",
+        "formation_id": 4
+    },
+    {
+        "nom": "module 5",
+        "numero": 5,
+        "description": "Description de la 5eme module",
+        "formation_id": 4
+    }
+     ,
+    {
+        "nom": "module 1",
+        "numero": 1,
+        "description": "Description de la 1er module",
+        "formation_id": 5
+    },
+    {
+        "nom": "module 2",
+        "numero": 2,
+        "description": "Description de la 2eme module",
+        "formation_id": 5
+    },
+    {
+        "nom": "module 3",
+        "numero": 3,
+        "description": "Description de la 3eme module",
+        "formation_id": 5
+    },
+    {
+        "nom": "module 4",
+        "numero": 4,
+        "description": "Description de la 4eme module",
+        "formation_id": 5
+    },
+    {
+        "nom": "module 5",
+        "numero": 5,
+        "description": "Description de la 5eme module",
+        "formation_id": 5
+    }
+]
