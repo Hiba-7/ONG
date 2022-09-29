@@ -19,9 +19,9 @@ return new class extends Migration
             $table->enum('type', TypeCotisationEnum::getValues());
             $table->decimal('montant', 8, 2);
             $table->foreignId('instance_id')->nullable()->references('id')->on('instances');
-            $table->date('année');
-            $table->date('délai_paiement');
-            $table->date('dernier_délai_paiement');
+            $table->date('année')->default(now());
+            $table->date('délai_paiement')->nullable();
+            $table->date('dernier_délai_paiement')->nullable();
             $table->timestamps();
         });
     }
