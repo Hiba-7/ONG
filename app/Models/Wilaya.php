@@ -26,9 +26,14 @@ class Wilaya extends Model
         return $this->hasManyThrough(User::class, Commune::class);
     }
 
+    public function inscriptions()
+    {
+        return $this->users()->withcount('formations as formations');
+    }
+
     public function certifiés()
     {
-        return $this->users()->withcount('formations as certifiés');
+        return $this->users()->where('certifié', true);
     }
     public function adhérants()
     {

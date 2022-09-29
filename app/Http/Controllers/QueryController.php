@@ -27,8 +27,7 @@ class QueryController extends Controller
 
     public function hiba()
     {
-        wilaya::find(1);
-        return DB::table('wilayas')->get();
+        return;
     }
 
     public function taha()
