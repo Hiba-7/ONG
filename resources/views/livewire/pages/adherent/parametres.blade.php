@@ -1,11 +1,11 @@
-<div x-data="{ activeTab: 'monprofile' }" class="bg-gray-100 h-screen grid p-3 grid-cols-3">
+<div x-data="{ activeTab: 'paiement' }" class="bg-gray-100 h-screen grid p-3 grid-cols-3 overflow-y-auto">
     {{-- make a page so that the logged in user can view his information --}}
 
     <div class="bg-white flex flex-col justify-start h-[200px] w-[80%] rounded-xl gap-10 col-span-1 border">
             <nav class="" aria-label="menu">
 
                 <ol role="list" class="overflow-hidden">
-                    <li>
+                   <li>
                         <a x-on:click="activeTab = 'monprofile'"
                             href="#monprofile"
                             class='relative flex items-start group p-3 pl-2 border-b-2'>
@@ -27,16 +27,16 @@
                             </span>
                         </a>
                     </li>
-                        <a x-on:click="activeTab = 'paiment'"
-                            href="#paiment"
+                        <a x-on:click="activeTab = 'paiement'"
+                            href="#paiement"
                             class='relative flex items-start group p-3 pl-2 border-b-2'>
                                 <span class="h-9 flex items-center" aria-hidden="true">
 
                                     <span
-                                    x-bind:class="activeTab == 'paiment' ? 'relative z-10 w-6 h-6 flex items-center justify-center bg-white border-2 border-blue-600 rounded-full' : 'relative z-10 w-6 h-6 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full group-hover:border-gray-400'">
+                                    x-bind:class="activeTab == 'paiement' ? 'relative z-10 w-6 h-6 flex items-center justify-center bg-white border-2 border-blue-600 rounded-full' : 'relative z-10 w-6 h-6 flex items-center justify-center bg-white border-2 border-gray-300 rounded-full group-hover:border-gray-400'">
 
                                                 <span
-                                                x-bind:class="activeTab == 'paiment' ? 'h-2.5 w-2.5 bg-blue-600 rounded-full' : 'h-2.5 w-2.5 bg-transparent rounded-full group-hover:bg-gray-300'">
+                                                x-bind:class="activeTab == 'paiement' ? 'h-2.5 w-2.5 bg-blue-600 rounded-full' : 'h-2.5 w-2.5 bg-transparent rounded-full group-hover:bg-gray-300'">
 
 
                                     </span>
@@ -44,8 +44,8 @@
 
                                 <span class="ml-4 min-w-0 flex flex-col">
                                     <span
-                                    x-bind:class="activeTab == 'paiment' ? 'text-xs 2xl:text-s font-bold tracking-wide  text-blue-600' : 'text-xs 2xl:text-s font-bold tracking-wide text-gray-500'">
-                                        Paiment</span>
+                                    x-bind:class="activeTab == 'paiement' ? 'text-xs 2xl:text-s font-bold tracking-wide  text-blue-600' : 'text-xs 2xl:text-s font-bold tracking-wide text-gray-500'">
+                                        Paiement</span>
                                     <span class="text-xs 2xl:text-s text-gray-500">Les details de votre paiement</span>
                                 </span>
                         </a>
@@ -82,8 +82,8 @@
     <div class="col-span-2" x-show="activeTab === 'monprofile'" x-cloak>
         <livewire:components.profile />
     </div>
-    <div class="col-span-2" x-show="activeTab === 'paiment'" x-cloak>
-        <livewire:components.profile-paiment />
+    <div class="col-span-2" x-show="activeTab === 'paiement'" x-cloak>
+        <livewire:components.profile-paiement />
     </div>
     <div class="col-span-2" x-show="activeTab === 'motdepasse'" x-cloak>
         <livewire:components.profile-pass />

@@ -13,8 +13,9 @@ use Filament\Tables\Columns\TextColumn;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\View\View;
 use Illuminate\Contracts\Pagination\Paginator;
+use DateTime;
 
-class ProfilePaiment extends Component implements Tables\Contracts\HasTable
+class ProfilePaiement extends Component implements Tables\Contracts\HasTable
 {
     use Tables\Concerns\InteractsWithTable;
 
@@ -29,13 +30,20 @@ class ProfilePaiment extends Component implements Tables\Contracts\HasTable
 
         return [
 
-            TextColumn::make('created_at')->label('Date')->sortable(),
+            TextColumn::make('created_at')
+                ->formatStateUsing(fn (string $state): string => date('d/m/Y' ,strtotime($state)))
+                ->label('Date')
+                ->sortable(),
 
-            TextColumn::make('cotisation.type')->label('Nom')->sortable(),
+            TextColumn::make('cotisation.type')->label('Type')->sortable()->enum([
+                'simple_local' => 'Cotisation Simple',
+                'simple_étranger' => 'Cotisation Simple',
+                'spécial' => 'Cotisation Spécial',
+            ]),
 
-            TextColumn::make('description')->label('Description')->sortable(),
+            TextColumn::make('instance')->label('Details'),
 
-            TextColumn::make('cotisation.montant')->label('Total')->sortable()
+            TextColumn::make('cotisation.montant')->label('Total')->money('DZD')->sortable()
 
 
         ];
@@ -51,6 +59,6 @@ class ProfilePaiment extends Component implements Tables\Contracts\HasTable
         $user = User::find(auth()->id());
         // $carte = User::find($id)->carte;
         $current_cotisations = $user->paiements()->whereYear('created_at', now()->year)->get();
-        return view('livewire.components.profile-paiment', compact('user', 'current_cotisations'));
+        return view('livewire.components.profile-paiement', compact('user', 'current_cotisations'));
     }
 }

@@ -7,6 +7,7 @@ use App\Models\Wilaya;
 use App\Models\Commune;
 use App\Models\Paiement;
 use App\Models\Formation;
+use Filament\Facades\Filament;
 use Illuminate\Http\Request;
 use App\Enums\UserCiviliteEnum;
 use App\Enums\TypeCotisationEnum;
@@ -33,6 +34,6 @@ class QueryController extends Controller
 
     public function taha()
     {
-        return Commune::withCount('users')->get();
+        return Paiement::find(1)->getCotisationTotalAttribute();
     }
 }

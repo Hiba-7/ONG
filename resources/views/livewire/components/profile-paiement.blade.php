@@ -26,9 +26,15 @@
                 <h3 class="text-lg leading-6 font-medium text-gray-900">Historique de Paiment</h3>
                 <p class="mt-1 max-w-2xl text-sm text-gray-500">Année {{ now()->year }}</p>
             </div>
-            <div class="mt-12 text-sm text-gray-900 sm:mt-0 overflow-auto">
+            <div id="history_table" class="mt-12 text-sm text-gray-900 sm:mt-0 overflow-auto">
                 {{ $this->table }}
             </div>
         </dl>
     </div>
 </div>
+<style>
+#history_table .filament-tables-container{
+    border-radius: 0px;
+    box-shadow: none;
+}
+</style>
