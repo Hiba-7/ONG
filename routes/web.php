@@ -49,6 +49,8 @@ Route::get('tw', function () {
     // dd($planning->module->formation->id);
 
     //  $commune = Commune::where('id', '<', (Commune::max('id')))->pluck('id', 'nom_commune');
+
+    return view('tw');
 });
 Route::middleware('auth')->group(function () {
 

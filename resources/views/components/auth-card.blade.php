@@ -1,4 +1,5 @@
-    <div class="rounded-xl p-8 bg-white shadow-lg flex items-center flex-col w-full lg:h-auto h-full lg:w-4/6">
+    <div
+        class="rounded-xl p-8 bg-white shadow-lg flex items-center flex-col max-w-md lg:h-auto ">
         <h1 class="text-4xl text-blue-700 ">
             {{ $title }}
         </h1>
