@@ -26,11 +26,6 @@ class Paiement extends Pivot
         'cotisation_total',
     ];
 
-    protected $casts = [
-        'cotisation_total' => 'decimal:2',
-    ];
-
-
     public function cotisation()
     {
         return $this->belongsTo(Cotisation::class);
@@ -43,7 +38,10 @@ class Paiement extends Pivot
 
     public function getCotisationTotalAttribute()
     {
-        return $this->montant_ajouté + $this->cotisation()->pluck('montant', 'type')->first();
+        $cotisation_total = $this->montant_ajouté + $this->cotisation()->pluck('montant')->first();
+        // convert to decimal
+        return number_format($cotisation_total, 2, '.', '');
+
     }
 
     public function scopeLocalCotisation($query)

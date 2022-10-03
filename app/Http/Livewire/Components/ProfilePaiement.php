@@ -31,7 +31,7 @@ class ProfilePaiement extends Component implements Tables\Contracts\HasTable
         return [
 
             TextColumn::make('created_at')
-                ->formatStateUsing(fn (string $state): string => date('d/m/Y' ,strtotime($state)))
+                ->formatStateUsing(fn (string $state): string => date('d/m/Y', strtotime($state)))
                 ->label('Date')
                 ->sortable(),
 
@@ -56,9 +56,11 @@ class ProfilePaiement extends Component implements Tables\Contracts\HasTable
 
     public function render(): View
     {
-        $user = User::find(auth()->id());
+        $current_paiements = Paiement::where('user_id', auth()->id())
+            ->whereBetween('created_at', [now()->startOfYear(), now()->endOfYear()])
+            ->with('cotisation:id,type')
+            ->get();
         // $carte = User::find($id)->carte;
-        $current_cotisations = $user->paiements()->whereYear('created_at', now()->year)->get();
-        return view('livewire.components.profile-paiement', compact('user', 'current_cotisations'));
+        return view('livewire.components.profile-paiement', compact('current_paiements'));
     }
 }
