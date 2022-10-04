@@ -8,8 +8,9 @@ use Filament\Widgets\Widget;
 
 class FormationWilaya extends Widget
 {
-    protected int | string | array $columnSpan = 1;
+
     public $wilayas, $users, $wilaya, $commune, $formations, $formation;
+    protected int | string | array $columnSpan = 1;
     public function mount()
     {
         $this->wilayas =

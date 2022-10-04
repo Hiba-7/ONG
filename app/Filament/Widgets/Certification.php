@@ -13,8 +13,7 @@ class Certification extends Widget
     public function mount()
     {
         $this->formations =
-            Formation::withCount(['users as certifications' => fn ($query) => $query
-                ->where('certifié', true)])
+            Formation::withCount(['certifiés as certifications'])
             ->get();
     }
     protected static string $view = 'filament.widgets.certification';

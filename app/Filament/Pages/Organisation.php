@@ -14,7 +14,6 @@ use Illuminate\Contracts\View\View;
 class Organisation extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-o-presentation-chart-bar';
-
     protected static string $view = 'filament.pages.organisation';
     protected static ?string $navigationGroup = 'tableau de bord';
 

@@ -8,7 +8,7 @@ use Filament\Widgets\BarChartWidget;
 class AdhérantAgeChart extends BarChartWidget
 {
 
-    protected static ?string $heading = 'Chart';
+    protected static ?string $heading = 'Les a  dhérants par age';
     protected int | string | array $columnSpan = 1;
     protected static ?int $sort = 3;
     protected function getData(): array
@@ -36,7 +36,7 @@ class AdhérantAgeChart extends BarChartWidget
             'datasets' => [
 
                 [
-                    'label' => 'My First Dataset',
+                    'label' => 'Les adhérants',
                     'data' => [$twenties, $thirties, $forties, $fifties, $sexties],
                     'backgroundColor' => [
                         'rgba(255, 99, 132, 0.2)',

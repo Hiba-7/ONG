@@ -3,9 +3,10 @@
 namespace App\Models;
 
 
-use App\Models\Module;
 use App\Models\User;
+use App\Models\Module;
 use App\Models\Planning;
+use App\Enums\UserEtatProfileEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -23,7 +24,12 @@ class Formation extends Model
     }
     public function certifiés()
     {
-        return $this->users()->wherePivot('certifié', true);
+        return $this->users()->where('etat_profile_courant', UserEtatProfileEnum::ADHERENT->value)
+            ->wherePivot('certifié', true);
+    }
+    public function adhérants()
+    {
+        return $this->users()->where('etat_profile_courant', UserEtatProfileEnum::ADHERENT->value);
     }
 
     public function modules()

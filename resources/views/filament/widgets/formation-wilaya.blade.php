@@ -1,4 +1,6 @@
-<x-filament::widget class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:col-span-full">
+<h1 class="relative p-5  text-2xl font-bold tracking-tight md:text-xl filament-header-heading capitalize"> Les
+    certifications par wilaya </h1>
+<x-filament::widget class=" relative p-5 grid sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:col-span-full">
     @foreach ($wilayas as $wilaya)
         <x-filament::card>
             <header class="text-lg text-gray-500 dark:text-gray-200 font-bold">
