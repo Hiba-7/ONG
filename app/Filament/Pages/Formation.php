@@ -14,7 +14,6 @@ use Filament\Pages\Page;
 class Formation extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-o-presentation-chart-bar';
-    protected int | string | array $columnSpan = 1;
 
     protected static string $view = 'filament.pages.formation';
     protected static ?string $navigationGroup = 'tableau de bord';
@@ -28,12 +27,9 @@ class Formation extends Page
             FormationChart::class,
             PlanningProchaine::class,
 
-        ];
-    }
-    protected function getFooterWidgets(): array
-    {
-        return [
             FormationWilaya::class,
+
+
         ];
     }
 }
