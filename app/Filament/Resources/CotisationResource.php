@@ -84,7 +84,7 @@ class CotisationResource extends Resource
                     ->sortable()
                     ->searchable()
                     ->money(fn (Model $record) => $record->type == 'simple_etranger' ? 'eur' : 'dzd'),
-                Tables\Columns\TextColumn::make('année')->date()->year()
+                Tables\Columns\TextColumn::make('année')->date()
                     ->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('délai_paiement')->sortable(),
                 Tables\Columns\TextColumn::make('dernier_délai_paiement')->sortable(),
@@ -92,7 +92,7 @@ class CotisationResource extends Resource
             ])
             ->filters([
                 SelectFilter::make('type')->options(TypeCotisationEnum::getValues()),
-                SelectFilter::make('instance_id')->options(Instance::pluck('nom', 'id'))->label('Instance'),
+                SelectFilter::make('instance_id')->relationship('instance', 'nom')->label('Instance'),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -103,10 +103,14 @@ class CotisationResource extends Resource
                 Tables\Actions\BulkAction::make('diffuser Users')->action(
                     function (EloquentCollection $records) {
                         $records->each(function (Model $record) {
-                            if ($record->type == TypeCotisationEnum::simple_local->value) {
-                                return $record->users()->attach(User::local()->get());
-                            } elseif ($record->type == TypeCotisationEnum::simple_etranger->value) {
-                                return $record->users()->attach(User::etranger()->get());
+                            if ($record->type == TypeCotisationEnum::SIMPLE_LOCAL->value) {
+                                return $record->users()->syncWithoutDetaching(User::local()->get());
+                            } elseif ($record->type == TypeCotisationEnum::SIMPLE_ETRANGER->value) {
+                                return $record->users()->syncWithoutDetaching(User::etranger()->get());
+                            } elseif ($record->type == TypeCotisationEnum::SPECIAL->value) {
+                                return $record->users()->syncWithoutDetaching(User::whereHas('instances', function ($query) use ($record) {
+                                    $query->where('instances.id', $record->instance_id);
+                                })->get());
                             }
                         });
                     }

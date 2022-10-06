@@ -171,4 +171,11 @@ class User extends Authenticatable implements HasName
     {
         return Carbon::parse($this->attributes['date_naissance'])->age;
     }
+
+    public function scopeWithoutLatestCotisation($query)
+    {
+        return $query->whereDoesntHave('cotisations', function ($query) {
+            $query->whereYear('année', now()->year);
+        });
+    }
 }
