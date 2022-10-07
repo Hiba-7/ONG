@@ -18,14 +18,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Carbon\Carbon;
 
-class User extends Authenticatable implements HasName
+class User extends Authenticatable implements FilamentUser, HasName
 {
 
-    // , FilamentUser
-    // public function canAccessFilament() :bool
-    // {
-    //     return $this->hasRole('super_admin');
-    // }
 
 
     /**
@@ -40,6 +35,11 @@ class User extends Authenticatable implements HasName
         return "{$this->prénom} {$this->nom}";
     }
 
+    // , FilamentUser
+    public function canAccessFilament(): bool
+    {
+        return $this->hasAnyRole(UserRoleEnum::getAdminRoles());
+    }
 
     protected $fillable = [
         'civilité',

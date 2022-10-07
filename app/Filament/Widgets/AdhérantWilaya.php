@@ -13,7 +13,7 @@ class AdhérantWilaya extends Widget
 {
     protected static ?int $sort = 4;
     protected int | string | array $columnSpan = 1;
-    public $wilayas, $users, $wilaya, $commune;
+    public $wilayas, $users, $wilaya, $communes;
     public function mount()
     {
         $this->wilayas =

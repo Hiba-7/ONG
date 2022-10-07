@@ -7,10 +7,9 @@ use Filament\Widgets\PieChartWidget;
 
 class AdhérantGenreChart extends PieChartWidget
 {
-    protected static ?string $heading = 'Adhérant';
+    protected static ?string $heading = 'Les adhérants par genre';
     protected int | string | array $columnSpan = 1;
     protected static ?int $sort = 1;
-    public ?string $filter = 'today';
     protected function getData(): array
     {
         $activeFilter = $this->filter;
@@ -48,15 +47,6 @@ class AdhérantGenreChart extends PieChartWidget
                 'Femme',
                 'Homme'
             ],
-        ];
-    }
-    protected function getFilters(): ?array
-    {
-        return [
-            'today' => 'Today',
-            'week' => 'Last week',
-            'month' => 'Last month',
-            'year' => 'This year',
         ];
     }
 }

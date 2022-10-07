@@ -34,16 +34,15 @@ class DatabaseSeeder extends Seeder
 
         parent::call(PlanningSeeder::class);
 
-
         // create the super admin
         // !@taha: this is the super admin
         User::factory(1)->create([
-            'email' => 'b@c.com'
-        ])->assignRole(UserRoleEnum::getAdminRoles());
+            'email' => 'b@c.com',
+        ]);
 
+        // // // User::find(1)->assignRole(UserRoleEnum::getAdminRoles());
 
         // create the rest of the users
         User::factory(9)->create();
-
     }
 }
