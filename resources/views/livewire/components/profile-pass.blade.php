@@ -4,8 +4,8 @@
     </div>
     <form novalidate id="form_pass" wire:submit.prevent="submit">
         {{ $this->form }}
-        <div class="pt-6 pb-3 grid grid-cols-7">
-            <x-tw.button class="col-start-7" type="submit">
+        <div class="pt-6 pb-3 flex justify-end">
+            <x-tw.button type="submit">
                 Submit
             </x-tw.button>
         </div>
