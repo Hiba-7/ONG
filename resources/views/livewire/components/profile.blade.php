@@ -19,7 +19,6 @@
 
             <p class="mt-1 max-w-2xl text-sm text-gray-500">Vos informations personnelles.
             </p>
-
         </div>
         <div class="px-3 col-start-3 col-span-2 grid grid-cols-2 border-l border-gray-200">
             <h3 class="text-lg leading-6 font-medium text-gray-900">Photo Profile</h3>
@@ -38,7 +37,9 @@
                     -webkit-box-shadow: 0 0 3px rgb(41, 39, 39);
                     box-shadow: 0 0 3px rgb(41, 39, 39);"
                     id="profile_pic" x-bind:class=" hover && !display == true ? 'opacity-25 col-start-2' : ''"
-                    :src="URL('/images/avatar/' . $user->photo_profile)" />
+                    :src="URL(
+                        '/images/avatars/' . str($user->photo_profile ? $user->photo_profile : 'default.jpg'),
+                    )" />
                 <input x-bind:disabled="display" name="photo_profile"
                     x-bind:class="display ? 'pointer-events-none' : 'cursor-pointer'"
                     class="opacity-0 rounded-sm absolute left-0 w-full top-0 h-full" id="upload_pic" type='file'
@@ -61,8 +62,22 @@
             <x-profile-item :label="'Niveau etude'" :content="$user->niveau_etude" />
             <x-profile-item :label="'Etat social'" :content="$user->etat_social" />
             <x-profile-item :label="'Adresse email'" :content="$user->email" />
-            <x-profile-item :label="'Cotisation total'":content="__('Cotisation à implementer')" />
+            <div class="px-4 py-5 sm:px-6">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Information de carte d'identité</h3>
+            </div>
 
+            <div class="px-4 py-5 sm:px-6 grid grid-cols-3">
+
+                <div class="col-span-2">
+                    <x-profile-item :label="'Numero de la carte'" :content="$carte->numero" />
+                    <x-profile-item :label="'Date de delivrance'" :content="$carte->date_delivrance" />
+                    <x-profile-item :label="'Date de expiration'" :content="$carte->date_expiration" />
+                </div>
+                <div class="flex items-center">
+                    <img class="" src="{{ URL('/images/scans/' . $carte->scan) }}" alt=""
+                        class="w-[auto] max-h-[150px]">
+                </div>
+            </div>
         </dl>
     </div>
     <div x-show="display == false" x-cloak class="border-t border-gray-200 px-4 py-5 sm:p-0">
@@ -74,7 +89,39 @@
             <x-profile-item :input="true" :name="'adresse'" :label="'Adresse'" :content="$user->adresse" />
             <x-profile-item :input="true" :name="'niveau_etude'" :label="'Niveau etude'" :content="$user->niveau_etude" />
             <x-profile-item :input="true" :name="'etat_social'" :label="'Etat social'" :content="$user->etat_social" />
-            <x-profile-item :input="true" :label="'Cotisation total'" :content="__('Cotisation à implementer')" />
+            <div class="px-4 py-5 sm:px-6">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Information de carte d'identité</h3>
+            </div>
+
+            <div class="px-4 py-5 sm:px-6 grid grid-cols-3">
+
+                <div class="col-span-2">
+                    <x-profile-item :input="true" :name="'numero'" :label="'Numero de la carte'" :content="$carte->numero" />
+                    <x-profile-item :type="'date'" :input="true" :name="'date_delivrance'" :label="'Date de delivrance'"
+                        :content="$carte->date_delivrance" />
+                    <x-profile-item :type="'date'" :input="true" :name="'date_expiration'" :label="'Date de expiration'"
+                        :content="$carte->date_expiration" />
+                </div>
+                <div class="flex items-center">
+                    <div x-data="{ hover: false }" @mouseover="hover=true" @mouseout="hover = false;"
+                        class="relative col-start-2">
+                        <div x-show="hover && !display"
+                            class="absolute w-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                            <p class="text-center">{{ __('Change Picture') }}</p>
+
+                        </div>
+                        <img class="w-[auto] max-h-[150px]" id="carte_scan"
+                            x-bind:class=" hover && !display == true ? 'opacity-25 col-start-2' : ''"
+                            src="{{ URL('/images/scans/' . $carte->scan) }}" />
+                        <input x-bind:disabled="display" name="scan"
+                            x-bind:class="display ? 'pointer-events-none' : 'cursor-pointer'"
+                            class="opacity-0 rounded-sm absolute left-0 w-full top-0 h-full" id="carte_upload"
+                            type='file' accept=".png, .jpg, .jpeg, .svg" />
+
+                    </div>
+                    <img class="" alt="">
+                </div>
+            </div>
         </dl>
     </div>
     <div class="border-t p-10 pb-3 flex justify-end">
@@ -118,6 +165,13 @@
         const [file] = upload_pic.files
         if (file) {
             profile_pic.src = URL.createObjectURL(file)
+
+        }
+    }
+    carte_upload.onchange = evt => {
+        const [scan] = carte_upload.files
+        if (scan) {
+            carte_scan.src = URL.createObjectURL(scan)
 
         }
     }

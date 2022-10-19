@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'b@c.com',
         ]);
 
-        Carte::factory(10)->create([
+        Carte::factory(1)->create([
             'user_id' => 1
         ]);
 

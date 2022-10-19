@@ -18,6 +18,7 @@ class CarteFactory extends Factory
     public function definition()
     {
         return [
+            "scan" => "1660831025.jpg",
             "numero" => fake()->creditCardNumber(),
             "date_delivrance" => fake()->date(),
             "date_expiration" => fake()->date(),

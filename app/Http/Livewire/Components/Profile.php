@@ -3,8 +3,10 @@
 namespace App\Http\Livewire\Components;
 
 use App\Models\User;
+use App\Models\Carte;
 use Illuminate\Http\Request;
 use File;
+use Illuminate\Support\Arr;
 use Filament\Notifications\Notification;
 use Livewire\Component;
 
@@ -13,7 +15,8 @@ class Profile extends Component
     public function render()
     {
         $user = auth()->user();
-        return view('livewire.components.profile', compact('user'));
+        $carte = Carte::find($user->carte->id);
+        return view('livewire.components.profile', compact('user', 'carte'));
     }
     public function submit(Request $request)
     {
@@ -24,8 +27,17 @@ class Profile extends Component
             'prénom' => ['nullable', 'string', 'max:255'],
             'adresse' => ['nullable', 'string'],
             'téléphone' => ['nullable', 'string', 'max:255'],
+            'numero' => ['nullable', 'numeric', 'maxdigits:20'],
+            'date_delivrance' => ['nullable', 'date', 'max:255'],
+            'date_expiration' => ['nullable', 'date', 'max:255'],
+            'scan' => ['nullable', 'mimes:jpg,jpeg,png,bmp,tiff,svg', 'max:2060']
         ]);
 
+        $carte_data = [
+            'numero' => $validatedData['numero'],
+            'date_delivrance' => $validatedData['date_delivrance'],
+            'date_expiration' => $validatedData['date_expiration'],
+        ];
         // Notification::make()
         //     ->title(__('Profile Updated successfully'))
         //     ->success()
@@ -33,8 +45,7 @@ class Profile extends Component
 
         // return redirect()->route('parametres');
         $filteredData = array_filter($validatedData, 'strlen');
-
-
+        $carte_data = array_filter($carte_data, 'strlen');
 
         if (empty($filteredData)) {
             Notification::make()
@@ -48,20 +59,33 @@ class Profile extends Component
             throw $error;
         }
         $user = User::find(auth()->user())[0];
+        $carte = Carte::find($user->carte->id);
 
         if (isset($filteredData['photo_profile'])) {
             $file = $request->file('photo_profile');
-            $old_photo = '/images/avatar/' . $user->photo_profile;
+            $old_photo = '/images/avatars/' . $user->photo_profile;
             $filename = time() . '.' . $file->extension();
-            $file->move(public_path('images/avatar'), $filename);
-            if (File::exists(public_path($old_photo))) {
+            $file->move(public_path('images/avatars'), $filename);
+            if (File::exists(public_path($old_photo)) && $user->photo_profile != "default.jpg") {
                 File::delete(public_path($old_photo));
             }
             $filteredData['photo_profile'] = $filename;
         }
 
+        if (isset($validatedData['scan'])) {
+            $file = $request->file('scan');
+            $old_scan = '/images/scans/' . $user->carte->scan;
+            $filename = time() . '.' . $file->extension();
+            $file->move(public_path('images/scans'), $filename);
+            if (File::exists(public_path($old_scan))) {
+                File::delete(public_path($old_scan));
+            }
+            $carte_data['scan'] = $filename;
+        }
 
-        $user->update($filteredData);
+        $user->update(Arr::except($filteredData, ['numero', 'date_delivrance', 'date_expiration', 'scan']));
+
+        $carte->update($carte_data);
 
 
 
