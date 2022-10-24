@@ -50,8 +50,10 @@ class RegisteredUserController extends Controller
     //?
     public function createStepTwo()
     {
+        $etats_sociaux = UserEtatSocialEnum::getValues();
+        $niveaux_etudes = UserNiveauEtudeEnum::getValues();
         $states = ["state1" => "completed", "state2" => "current"];
-        return view('auth.register.step-two', compact('states'));
+        return view('auth.register.step-two', compact('states', 'etats_sociaux', 'niveaux_etudes'));
     }
 
     public function storeStepTwo(Request $request)
@@ -65,9 +67,13 @@ class RegisteredUserController extends Controller
             'téléphone' => ['required', 'string', 'max:255'],
             'adresse' => ['required', 'string'],
             'pays_id' => ['required', 'exists:pays,id'],
+            'niveau_etude' => [new Enum(UserNiveauEtudeEnum::class)],
+            'etat_social' => [new Enum(UserEtatSocialEnum::class)],
+            'spécialité' => ['required', 'string', 'max:255'],
+            'fonction' => ['required', 'string', 'max:255'],
         ]);
-        
-        
+
+
         if ($validatedData['pays_id'] == 4) {
             $validatedData = array_merge($validatedData, $request->validate([
                 'commune_id' => ['required', 'lt:1542', 'exists:communes,id']
@@ -83,7 +89,7 @@ class RegisteredUserController extends Controller
         $request->session()->put('user', $user);
         $request->session()->put('steps.step-two', true);
 
-        return redirect()->route('register.step.three');
+        return redirect()->route('register.step.four');
     }
 
 
@@ -123,7 +129,7 @@ class RegisteredUserController extends Controller
     //?
     public function createStepFour()
     {
-        $states = ["state1" => "completed", "state2" => "completed", "state3" => "completed", "state4" => "current"];
+        $states = ["state1" => "completed", "state2" => "completed", "state4" => "current"];
         return view('auth.register.step-four', compact('states'));
     }
 
