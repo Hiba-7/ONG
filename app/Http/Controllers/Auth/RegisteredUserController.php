@@ -67,6 +67,7 @@ class RegisteredUserController extends Controller
             'téléphone' => ['required', 'string', 'max:255'],
             'adresse' => ['required', 'string'],
             'pays_id' => ['required', 'exists:pays,id'],
+            'commune_id' => ['sometimes', 'exists:communes,id'],
             'niveau_etude' => [new Enum(UserNiveauEtudeEnum::class)],
             'etat_social' => [new Enum(UserEtatSocialEnum::class)],
             'spécialité' => ['required', 'string', 'max:255'],
@@ -89,12 +90,43 @@ class RegisteredUserController extends Controller
         $request->session()->put('user', $user);
         $request->session()->put('steps.step-two', true);
 
-        return redirect()->route('register.step.four');
+        return redirect()->route('register.step.three');
     }
 
 
     //?
     //? step 3
+    //?
+    // public function createStepThree()
+    // {
+    //     $etats_sociaux = UserEtatSocialEnum::getValues();
+    //     $niveaux_etudes = UserNiveauEtudeEnum::getValues();
+    //     $states = ["state1" => "completed", "state2" => "completed", "state3" => "current"];
+    //     return view('auth.register.step-three', compact('states', 'etats_sociaux', 'niveaux_etudes'));
+    // }
+
+
+
+    // public function storeStepThree(Request $request)
+    // {
+    //     $validatedData = $request->validate([
+    //         'niveau_etude' => [new Enum(UserNiveauEtudeEnum::class)],
+    //         'etat_social' => [new Enum(UserEtatSocialEnum::class)],
+    //         'spécialité' => ['required', 'string', 'max:255'],
+    //         'fonction' => ['required', 'string', 'max:255'],
+    //     ]);
+
+    //     $user = $request->session()->get('user');
+    //     $user->fill($validatedData);
+
+    //     $request->session()->put('user', $user);
+    //     $request->session()->put('steps.step-three', true);
+
+    //     return redirect()->route('register.step.four');
+    // }
+
+    //?
+    //? step 4
     //?
     public function createStepThree()
     {
@@ -105,41 +137,16 @@ class RegisteredUserController extends Controller
     }
 
 
-
     public function storeStepThree(Request $request)
-    {
-        $validatedData = $request->validate([
-            'niveau_etude' => [new Enum(UserNiveauEtudeEnum::class)],
-            'etat_social' => [new Enum(UserEtatSocialEnum::class)],
-            'spécialité' => ['required', 'string', 'max:255'],
-            'fonction' => ['required', 'string', 'max:255'],
-        ]);
-
-        $user = $request->session()->get('user');
-        $user->fill($validatedData);
-
-        $request->session()->put('user', $user);
-        $request->session()->put('steps.step-three', true);
-
-        return redirect()->route('register.step.four');
-    }
-
-    //?
-    //? step 4
-    //?
-    public function createStepFour()
-    {
-        $states = ["state1" => "completed", "state2" => "completed", "state4" => "current"];
-        return view('auth.register.step-four', compact('states'));
-    }
-
-
-    public function storeStepFour(Request $request)
     {
         $validatedData = $request->validate([
             'numero' => ['required', 'integer'],
             'date_delivrance' => ['required', 'date'],
             'date_expiration' => ['required', 'date', 'after:date_delivrance', 'after:today'],
+
+            'numero' => ['required', 'integer'],
+            'numero_bureau' => ['required', 'integer'],
+            'lieu' => ['required', 'string'],
         ]);
 
 

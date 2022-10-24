@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('adresse');
             $table->string('adresse_secondaire')->nullable();
             $table->foreignId('pays_id')->references('id')->on('pays');
-            $table->foreignId('commune_id')->default(Commune::count() ? Commune::find(Commune::count())->id : null)->references('id')->on('communes');
+            $table->foreignId('commune_id')->nullable()->default(Commune::count() ? Commune::find(Commune::count())->id : null)->references('id')->on('communes');
             $table->string('photo_profile')->nullable();
             $table->string('spécialité');
             $table->string('fonction');

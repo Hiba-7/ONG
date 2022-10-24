@@ -215,7 +215,7 @@
 
             {{-- submit --}}
             <div class="flex gap-4 justify-end w-full mt-8">
-                <x-tw.back :size="'xl'" href="{{ redirect()->route('register.step.one') }}">
+                <x-tw.back :size="'xl'" href="{{ route('register.step.one') }}">
                     {{ __('Précédent') }}
                 </x-tw.back>
                 <x-tw.button :size="'xl'">
