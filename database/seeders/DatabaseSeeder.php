@@ -8,6 +8,7 @@ use App\Enums\UserRoleEnum;
 use App\Models\Poste;
 use App\Models\Cotisation;
 use App\Models\User;
+use App\Models\Carte;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
@@ -38,6 +39,10 @@ class DatabaseSeeder extends Seeder
         // !@taha: this is the super admin
         User::factory(1)->create([
             'email' => 'b@c.com',
+        ]);
+
+        Carte::factory(1)->create([
+            'user_id' => 1
         ]);
 
         // // // User::find(1)->assignRole(UserRoleEnum::getAdminRoles());

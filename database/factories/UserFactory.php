@@ -34,7 +34,7 @@ class UserFactory extends Factory
             'téléphone' => fake()->phoneNumber('0#########'),
             'etat_profile_courant' => fake()->randomElement(UserEtatProfileEnum::cases()),
             'adresse' => fake()->address(),
-            'photo_profile' => fake()->imageUrl(),
+            'photo_profile' => null,
             'niveau_etude' => fake()->randomElement(UserNiveauEtudeEnum::cases()),
             'etat_social' => fake()->randomElement(UserEtatSocialEnum::cases()),
             'spécialité' => fake()->sentence(),
