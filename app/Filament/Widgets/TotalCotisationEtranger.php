@@ -19,7 +19,9 @@ class TotalCotisationEtranger extends BaseWidget
     public function mount()
     {
         // get the paiements that were created this year
-        $paiements = Paiement::whereYear('created_at', now()->year)->etrangerCotisation()->get();
+        $paiements = Paiement::whereHas('cotisation', function ($query) {
+            $query->whereYear('année', now()->year);
+        })->etrangerCotisation()->get();
         $this->paiements_count = $paiements->count();
         foreach ($paiements as $paiement) {
             $this->montant_total += $paiement->cotisation_total;
