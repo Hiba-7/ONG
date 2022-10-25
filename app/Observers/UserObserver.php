@@ -5,6 +5,8 @@ namespace App\Observers;
 use App\Enums\UserRoleEnum;
 use App\Models\User;
 use App\Models\Cotisation;
+use App\Models\Carte;
+use App\Models\VoteCarte;
 use Illuminate\Support\Carbon;
 
 class UserObserver
@@ -26,6 +28,12 @@ class UserObserver
         $user->cotisations()->attach($cotisation->id, []);
 
         $user->assignRole(UserRoleEnum::ADHERENT_SIMPLE->value);
+
+        $carte = new Carte();
+        $user->carte()->save($carte);
+
+        $vote_carte = new VoteCarte();
+        $user->vote_carte()->save($vote_carte);
     }
 
     /**
