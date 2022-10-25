@@ -4,20 +4,22 @@ namespace App\Http\Controllers\Auth;
 
 use App\Enums\UserCiviliteEnum;
 use App\Http\Controllers\Controller;
+
 use App\Models\Pays;
 use App\Models\User;
+use App\Models\Carte;
+use App\Models\VoteCarte;
+
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\Rules\Enum;
 use App\Enums\UserEtatSocialEnum;
 use App\Enums\UserNiveauEtudeEnum;
-use App\Models\Carte;
-use App\Models\Cotisation;
-use Illuminate\Validation\Rule;
+use File;
+
 
 
 //! où peut-on insérer l'attribut booléen fondateur
@@ -67,14 +69,11 @@ class RegisteredUserController extends Controller
             'téléphone' => ['required', 'string', 'max:255'],
             'adresse' => ['required', 'string'],
             'pays_id' => ['required', 'exists:pays,id'],
-            'commune_id' => ['sometimes', 'exists:communes,id'],
             'niveau_etude' => [new Enum(UserNiveauEtudeEnum::class)],
             'etat_social' => [new Enum(UserEtatSocialEnum::class)],
             'spécialité' => ['required', 'string', 'max:255'],
             'fonction' => ['required', 'string', 'max:255'],
         ]);
-
-
         if ($validatedData['pays_id'] == 4) {
             $validatedData = array_merge($validatedData, $request->validate([
                 'commune_id' => ['required', 'lt:1542', 'exists:communes,id']
@@ -128,42 +127,67 @@ class RegisteredUserController extends Controller
     //?
     //? step 4
     //?
+
     public function createStepThree()
     {
-        $etats_sociaux = UserEtatSocialEnum::getValues();
-        $niveaux_etudes = UserNiveauEtudeEnum::getValues();
+
         $states = ["state1" => "completed", "state2" => "completed", "state3" => "current"];
-        return view('auth.register.step-three', compact('states', 'etats_sociaux', 'niveaux_etudes'));
+        return view('auth.register.step-three', compact('states'));
     }
 
 
     public function storeStepThree(Request $request)
     {
-        $validatedData = $request->validate([
-            'numero' => ['required', 'integer'],
-            'date_delivrance' => ['required', 'date'],
-            'date_expiration' => ['required', 'date', 'after:date_delivrance', 'after:today'],
+        if ($request['submit'] == 'save') {
 
-            'numero' => ['required', 'integer'],
-            'numero_bureau' => ['required', 'integer'],
-            'lieu' => ['required', 'string'],
-        ]);
+            $validatedData = $request->validate([
+                'numero' => ['nullable', 'required_with:date_delivrance,lieu_delivrance,date_expiration', 'integer'],
+                'date_delivrance' => ['nullable', 'required_with:numero,lieu_delivrance,date_expiration', 'date'],
+                'lieu_delivrance' => ['nullable', 'required_with:date_delivrance,numero,date_expiration', 'string'],
+                'date_expiration' => ['nullable', 'required_with:date_delivrance,lieu_delivrance,numero', 'date', 'after:date_delivrance', 'after:today'],
+                'scan' => ['nullable', 'mimes:jpg,jpeg,png,bmp,tiff,svg', 'max:2060'],
+
+                'numero_inscription' => ['nullable', 'integer'],
+                'numero_bureau' => ['nullable', 'integer'],
+                'lieu' => ['nullable', 'string'],
+                'scan_vote' => ['nullable', 'mimes:jpg,jpeg,png,bmp,tiff,svg', 'max:2060'],
+            ]);
+        } else {
+            $validatedData = $request->all();
+            foreach ($validatedData as $key => $value) {
+                $validatedData[$key] = null;
+            }
+        }
+
+
 
 
         $user = $request->session()->get("user");
         $user->save();
 
         // UserObeserver will attach the latest simple cotisation to the user
-
-        $carte = new Carte($validatedData);
-        $saved = $user->carte()->save($carte);
-
-        if ($saved && $request->file('scan')) {
+        if ($request->file('scan')) {
             $file = $request->file('scan');
             $filename = time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('images'), $filename);
+            $file->move(public_path('images/id_cards'), $filename);
             $validatedData['scan'] = $filename;
         }
+
+        if ($request->file('scan_vote')) {
+            $file = $request->file('scan_vote');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('images/vote_cards'), $filename);
+            $validatedData['scan_vote'] = $filename;
+        }
+
+        $carte = new Carte($validatedData);
+        $user->carte()->save($carte);
+
+        $vote_carte = new VoteCarte($validatedData);
+        $user->vote_carte()->save($vote_carte);
+
+
+
 
         event(new Registered($user));
         Auth::login($user);

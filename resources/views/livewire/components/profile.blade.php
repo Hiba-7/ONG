@@ -74,12 +74,32 @@
                     <x-profile-item :label="'Date de expiration'" :content="$carte->date_expiration" />
                 </div>
                 <div class="flex items-center">
-                    <img class="" src="{{ URL('/images/scans/' . $carte->scan) }}" alt=""
-                        class="w-[auto] max-h-[150px]">
+                    <img class=""
+                        src="{{ $carte->scan ? URL('/images/id_cards/' . $carte->scan) : URL('/images/placeholder.jpg') }}"
+                        alt="" class="w-[auto] max-h-[150px]">
+                </div>
+            </div>
+
+            <div class="px-4 py-5 sm:px-6">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Information de carte d'vote</h3>
+            </div>
+
+            <div class="px-4 py-5 sm:px-6 grid grid-cols-3">
+
+                <div class="col-span-2">
+                    <x-profile-item :label="'Numero de la carte'" :content="$vote_carte->numero_inscription" />
+                    <x-profile-item :label="'Lieu de vote'" :content="$vote_carte->lieu" />
+                    <x-profile-item :label="'Numero de bureau'" :content="$vote_carte->numero_bureau" />
+                </div>
+                <div class="flex items-center">
+                    <img class=""
+                        src="{{ $vote_carte->scan_vote ? URL('/images/vote_cards/' . $vote_carte->scan_vote) : URL('/images/placeholder.jpg') }}"
+                        alt="" class="w-[auto] max-h-[150px]">
                 </div>
             </div>
         </dl>
     </div>
+
     <div x-show="display == false" x-cloak class="border-t border-gray-200 px-4 py-5 sm:p-0">
         <dl class="sm:divide-y sm:divide-gray-200">
             <x-profile-item :input="true" :name="'nom'" :label="'Nom'" :content="$user->nom" />
@@ -112,7 +132,7 @@
                         </div>
                         <img class="w-[auto] max-h-[150px]" id="carte_scan"
                             x-bind:class=" hover && !display == true ? 'opacity-25 col-start-2' : ''"
-                            src="{{ URL('/images/scans/' . $carte->scan) }}" />
+                            src="{{ $carte->scan ? URL('/images/id_cards/' . $carte->scan) : URL('/images/placeholder.jpg') }}" />
                         <input x-bind:disabled="display" name="scan"
                             x-bind:class="display ? 'pointer-events-none' : 'cursor-pointer'"
                             class="opacity-0 rounded-sm absolute left-0 w-full top-0 h-full" id="carte_upload"
@@ -122,6 +142,40 @@
                     <img class="" alt="">
                 </div>
             </div>
+
+            <div class="px-4 py-5 sm:px-6">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Information de carte de vote</h3>
+            </div>
+            {{-- vote carde form --}}
+            <div class="px-4 py-5 sm:px-6 grid grid-cols-3">
+
+                <div class="col-span-2">
+                    <x-profile-item input="true" :name="'numero_inscription'" :label="'Numero de la carte'" :content="$vote_carte->numero_inscription" />
+                    <x-profile-item input="true" :type="'number'" :name="'lieu'" :label="'Lieu de vote'"
+                        :content="$vote_carte->lieu" />
+                    <x-profile-item input="true" :name="'numero_bureau'" :label="'Numero de bureau'" :content="$vote_carte->numero_bureau" />
+                </div>
+                <div class="flex items-center">
+                    <div x-data="{ hover: false }" @mouseover="hover=true" @mouseout="hover = false;"
+                        class="relative col-start-2">
+                        <div x-show="hover && !display"
+                            class="absolute w-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                            <p class="text-center">{{ __('Change Picture') }}</p>
+
+                        </div>
+                        <img class="w-[auto] max-h-[150px]" id="scan_vote"
+                            x-bind:class=" hover && !display == true ? 'opacity-25 col-start-2' : ''"
+                            src="{{ $vote_carte->scan_vote ? URL('/images/vote_cards/' . $vote_carte->scan_vote) : URL('/images/placeholder.jpg') }}" />
+                        <input x-bind:disabled="display" name="scan_vote"
+                            x-bind:class="display ? 'pointer-events-none' : 'cursor-pointer'"
+                            class="opacity-0 rounded-sm absolute left-0 w-full top-0 h-full" id="vote_upload"
+                            type='file' accept=".png, .jpg, .jpeg, .svg" />
+
+                    </div>
+                    <img class="" alt="">
+                </div>
+            </div>
+
         </dl>
     </div>
     <div class="border-t p-10 pb-3 flex justify-end">
@@ -172,6 +226,13 @@
         const [scan] = carte_upload.files
         if (scan) {
             carte_scan.src = URL.createObjectURL(scan)
+
+        }
+    }
+    vote_upload.onchange = evt => {
+        const [scan] = vote_upload.files
+        if (scan) {
+            vote_scan.src = URL.createObjectURL(scan)
 
         }
     }

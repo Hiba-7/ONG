@@ -4,6 +4,8 @@ namespace App\Http\Livewire\Components;
 
 use App\Models\User;
 use App\Models\Carte;
+use App\Models\VoteCarte;
+
 use Illuminate\Http\Request;
 use File;
 use Illuminate\Support\Arr;
@@ -16,7 +18,8 @@ class Profile extends Component
     {
         $user = auth()->user();
         $carte = Carte::find($user->carte->id);
-        return view('livewire.components.profile', compact('user', 'carte'));
+        $vote_carte = VoteCarte::find($user->vote_carte->id);
+        return view('livewire.components.profile', compact('user', 'carte', 'vote_carte'));
     }
     public function submit(Request $request)
     {

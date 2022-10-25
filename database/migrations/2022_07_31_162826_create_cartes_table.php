@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('cartes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('numero')->unique();
-            $table->date('date_delivrance');
-            $table->date('date_expiration');
+            $table->unsignedBigInteger('numero')->unique()->nullable();
+            $table->date('date_delivrance')->nullable();
+            $table->date('date_expiration')->nullable();
+            $table->string('lieu_delivrance')->nullable();
             $table->string('scan')->nullable();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

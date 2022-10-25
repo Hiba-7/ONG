@@ -142,7 +142,7 @@ class User extends Authenticatable implements FilamentUser, HasName
     {
         return $this->hasOne(Carte::class);
     }
-    public function votecarte()
+    public function vote_carte()
     {
         return $this->hasOne(VoteCarte::class);
     }

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Carte extends Model
 {
     use HasFactory;
-    protected $fillable = ['numero', 'date_delivrance', 'date_expiration', 'scan', 'user_id'];
+    protected $fillable = ['numero', 'date_delivrance', 'date_expiration', 'lieu_delivrance', 'scan', 'user_id'];
 
     public function user()
     {

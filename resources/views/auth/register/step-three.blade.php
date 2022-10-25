@@ -5,8 +5,8 @@
 
     {{-- register form --}}
     <div class="bg-white h-full w-full rounded-xl p-3 col-span-6 shadow-xl flex flex-col justify-center items-center">
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
-        <form method="POST" class="w-full p-8 rounded-xl bg-gray-100" enctype="multipart/form-data"
+        {{-- <x-auth-validation-errors class="mb-4" :errors="$errors" /> --}}
+        <form id="form" method="POST" class="w-full p-8 rounded-xl bg-gray-100" enctype="multipart/form-data"
             action="{{ route('register.step.three.post') }}">
             @csrf
 
@@ -16,19 +16,26 @@
             <div class="flex gap-6 justify-center w-full mt-8">
                 <div class="flex-1">
                     <x-label for="numero" :value="__('Numero Carte Nationale')" />
-                    <x-input id="numero" class="block mt-1 w-full" type="number" name="numero" required />
+                    <x-input :value="old('numero')" id="numero" class="block mt-1 w-full" type="text" name="numero" />
                     @error('numero')
                         <span class="text-red-500">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class="flex-1"></div>
+                <div class="flex-1">
+                    <x-label for="lieu_delivrance" :value="__('Lieu de delivrance')" />
+                    <x-input :value="old('lieu_delivrance')" id="lieu_delivrance" class="block mt-1 w-full" type="text"
+                        name="lieu_delivrance" />
+                    @error('lieu_delivrance')
+                        <span class="text-red-500">{{ $message }}</span>
+                    @enderror
+                </div>
             </div>
             {{-- date delivrance, expiration --}}
             <div class="flex gap-6 justify-center w-full mt-8">
                 <div class="flex-1">
                     <x-label for="date_delivrance" :value="__('Date delivrance')" />
                     <x-input id="date_delivrance" :value="old('date_delivrance')" class="block mt-1 w-full" type="date"
-                        name="date_delivrance" required />
+                        name="date_delivrance" />
                     @error('date_delivrance')
                         <span class="text-red-500">{{ $message }}</span>
                     @enderror
@@ -36,7 +43,7 @@
                 <div class="flex-1">
                     <x-label for="date_expiration" :value="__('Date expiration')" />
                     <x-input id="date_expiration" :value="old('date_expiration')" class="block mt-1 w-full" type="date"
-                        name="date_expiration" required />
+                        name="date_expiration" />
                     @error('date_expiration')
                         <span class="text-red-500">{{ $message }}</span>
                     @enderror
@@ -68,9 +75,9 @@
             {{-- numero carte de vote --}}
             <div class="flex gap-6 justify-center w-full mt-8">
                 <div class="flex-1">
-                    <x-label for="numero" :value="__('Numero Carte Vote')" />
-                    <x-input id="numero" class="block mt-1 w-full" type="number" name="numero_inscription"
-                        required />
+                    <x-label for="numero_inscription" :value="__('Numero Carte Vote')" />
+                    <x-input :value="old('numero_inscription    ')" id="numero_inscription" class="block mt-1 w-full" type="text"
+                        name="numero_inscription" />
                     @error('numero_inscription')
                         <span class="text-red-500">{{ $message }}</span>
                     @enderror
@@ -82,15 +89,15 @@
                 <div class="flex-1">
                     <x-label for="numero_bureau" :value="__('N° de bureau')" />
                     <x-input id="numero_bureau" :value="old('numero_bureau')" class="block mt-1 w-full" type="number"
-                        name="numero_bureau" required />
+                        name="numero_bureau" />
                     @error('numero_bureau')
                         <span class="text-red-500">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="flex-1">
-                    <x-label for="lieu" :value="__('lieu')" />
-                    <x-input id="lieu" :value="old('lieu')" class="block mt-1 w-full" type="text" name="lieu"
-                        required />
+                    <x-label for="lieu" :value="__('Lieu  de vote ')" />
+                    <x-input id="lieu" :value="old('lieu')" class="block mt-1 w-full" type="text"
+                        name="lieu" />
                     @error('lieu')
                         <span class="text-red-500">{{ $message }}</span>
                     @enderror
@@ -103,7 +110,7 @@
                 <div class="rounded p-4 border-dashed border-gray-300 border-2">
                     <label
                         class="flex justify-center flex-col items-center gap-2 text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500"
-                        for="scan">
+                        for="scan_vote">
                         <svg width="38" height="39" viewBox="0 0 38 39" fill="none"
                             xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -112,7 +119,7 @@
                         </svg>
 
                         <span>Ajouter un scan de votre carte de vote</span>
-                        <x-input type="file" name="scan_vote" id="scan" class="sr-only" />
+                        <x-input type="file" name="scan_vote" id="scan_vote" class="sr-only" />
                     </label>
                 </div>
             </div>
@@ -120,10 +127,15 @@
 
             {{-- submit --}}
             <div class="flex gap-4 justify-end w-full mt-8">
-                <x-tw.back :size="'xl'" href="{{ redirect()->route('register.step.one') }}">
+                <x-tw.back :size="'xl'" href="{{ route('register.step.two') }}">
                     {{ __('Précédent') }}
                 </x-tw.back>
-                <x-tw.button :size="'xl'">
+
+                <x-tw.button value="passer" name="submit" id="passer" :size="'xl'">
+                    {{ __('Passer') }}
+                </x-tw.button>
+
+                <x-tw.button value="save" name="submit" id="save" :size="'xl'">
                     {{ __('Suivant') }}
                 </x-tw.button>
             </div>

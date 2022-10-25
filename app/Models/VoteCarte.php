@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class VoteCarte extends Model
 {
     use HasFactory;
-    protected $fillable = ['numero_inscription', 'lieu', 'numero_bureau', 'user_id'];
+    protected $fillable = ['numero_inscription', 'lieu', 'numero_bureau', 'user_id', 'scan_vote'];
 
     public function user()
     {

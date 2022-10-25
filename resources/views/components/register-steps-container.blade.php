@@ -21,7 +21,7 @@
         <li class="relative">
             <x-register-step
                 href="{{ $state3 == 'current' || $state3 == 'completed' ? route('register.step.three') : '' }}"
-                :state="__($state3)" :step_name="__('CARTE NATIONALE')" :step_description="__('veuillez entrer les informations de votre carte nationale.')" :last="true" />
+                :state="__($state3)" :step_name="__('CARTES PERSONNELLE')" :step_description="__('veuillez entrer les informations de votre carte nationale et carte vote.')" :last="true" />
         </li>
     </ol>
 </nav>

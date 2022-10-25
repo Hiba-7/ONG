@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('vote_cartes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('numero_inscription')->unique();
-            $table->integer('numero_bureau');
-            $table->string('lieu');
-            $table->string('scan_vote')->nullable();
+            $table->unsignedBigInteger('numero_inscription')->unique()->nullable();
+            $table->integer('numero_bureau')->nullable();
+            $table->string('lieu')->nullable();
+            $table->string('scan_vote')->nullable()->nullable();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
