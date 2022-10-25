@@ -6,9 +6,9 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Carte>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\VoteCarte>
  */
-class CarteFactory extends Factory
+class VoteCarteFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,11 +18,8 @@ class CarteFactory extends Factory
     public function definition()
     {
         return [
-            "scan" => null,
-            "numero" => null,
-            "date_delivrance" => null,
-            "date_expiration" => null,
-            "lieu_delivrance" => null,
+            "scan_vote" => null,
+            "numero_inscription" => null,
             "user_id" => User::inRandomOrder()->first()->id,
         ];
     }

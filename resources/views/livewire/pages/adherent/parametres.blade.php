@@ -1,4 +1,4 @@
-<div x-data="{ activeTab: 'motdepasse' }" class="bg-gray-100 h-screen grid p-3 grid-cols-3 overflow-y-auto">
+<div x-data="{ activeTab: 'monprofile' }" class="bg-gray-100 h-screen grid p-3 grid-cols-3 overflow-y-auto">
     {{-- make a page so that the logged in user can view his information --}}
 
     <div class="bg-white flex flex-col justify-start h-[200px] w-[80%] rounded-xl gap-10 col-span-1 border">

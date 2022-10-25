@@ -93,8 +93,8 @@
                 <div class="w-full">
                     <x-label for="pays" :value="__('Pays')" />
                     <x-select :value="old('pays_id')" x-model="selectedPays" required class="block mt-1 w-full"
-                    :identity="__('pays_id')">
-                    <option value="">Selectioner votre Pays</option>
+                        :identity="__('pays_id')">
+                        <option value="">Selectioner votre Pays</option>
                         <template x-for="p in pays">
                             <option x-bind:value="p.id" x-text="p.nom">
                             </option>
@@ -113,8 +113,7 @@
                             x-model="selectedWilaya">
                             <option value="">Selectioner votre wilaya</option>
                             <template x-for="wilaya in wilayas">
-                                <option x-bind:value="wilaya.id"
-                                    x-text="wilaya.id + ' . ' + wilaya.nom">
+                                <option x-bind:value="wilaya.id" x-text="wilaya.id + ' . ' + wilaya.nom">
                                 </option>
                             </template>
                         </x-select>
@@ -156,9 +155,58 @@
                 {{-- phone number --}}
                 <div class="w-full">
                     <x-label class="mb-1" for="téléphone" :value="__('Numéro de téléphone')" />
-                    <x-input :value="old('téléphone')" type="tel" class="block w-full" name="téléphone"
-                        id="phone" />
+                    <x-input :value="old('téléphone')" type="tel" class="block w-full" name="téléphone" id="phone" />
                     @error('téléphone')
+                        <span class="text-red-500">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+
+            {{-- niveau etude & etat social --}}
+            <div class="flex gap-6 justify-center w-full mt-8">
+                <div class="flex-1">
+                    <x-label for="niveau_etude" :value="__('Niveau d\'étude')" />
+                    <x-select class="block mt-1 w-full" :value="old('niveau_etude')" :identity="'niveau_etude'">
+                        <option value="">Choisir Votre niveau d'etude</option>
+                        @foreach ($niveaux_etudes as $niveau_etude)
+                            <option value="{{ $niveau_etude }}">{{ $niveau_etude }}</option>
+                        @endforeach
+                    </x-select>
+                    @error('niveau_etude')
+                        <span class="text-red-500">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="flex-1">
+                    <x-label for="etat_social" :value="__('Etat Social')" />
+                    <x-select class="block mt-1 w-full" :value="old('etat_social')" :identity="'etat_social'">
+                        <option value="">Choisir votre Etat Social</option>
+                        @foreach ($etats_sociaux as $etat_social)
+                            <option value="{{ $etat_social }}">{{ $etat_social }}</option>
+                        @endforeach
+                    </x-select>
+                    @error('etat_social')
+                        <span class="text-red-500">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+
+            {{-- derniere fonction et specialité --}}
+            <div class="flex gap-6 justify-center w-full mt-8">
+                <div class="flex-1">
+                    <x-label for="fonction" :value="__('Derniere Fonction')" />
+                    <x-input id="fonction" class="block mt-1 w-full" :value="old('fonction')" type="text"
+                        name="fonction" required />
+                    @error('fonction')
+                        <span class="text-red-500">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="flex-1">
+                    <x-label for="spécialité" :value="__('Spécialité')" />
+                    <x-input id="spécialité" class="block mt-1 w-full" :value="old('spécialité')" type="text"
+                        name="spécialité" required />
+                    @error('spécialité')
                         <span class="text-red-500">{{ $message }}</span>
                     @enderror
                 </div>
@@ -167,7 +215,7 @@
 
             {{-- submit --}}
             <div class="flex gap-4 justify-end w-full mt-8">
-                <x-tw.back :size="'xl'" href="{{ redirect()->route('register.step.one') }}">
+                <x-tw.back :size="'xl'" href="{{ route('register.step.one') }}">
                     {{ __('Précédent') }}
                 </x-tw.back>
                 <x-tw.button :size="'xl'">

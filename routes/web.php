@@ -12,6 +12,7 @@ use App\Enums\TypeCotisationEnum;
 use App\Enums\UserEtatProfileEnum;
 use App\Http\Livewire\Pages\Accueil;
 use App\Http\Livewire\Pages\Adresse;
+use App\Http\Livewire\Components\Profile;
 use App\Http\Livewire\Pages\Instance;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Pages\AdminRoute;
@@ -64,6 +65,7 @@ Route::middleware('auth')->group(function () {
     Route::get('instances', Adresse::class)->name("instances");
     Route::get('faq', Faq::class)->name("faq");
     Route::get('parametres', Parametres::class)->name("parametres");
+    Route::post('parametres', [Profile::class, 'submit'])->name("profile.submit");
     Route::prefix('adresse')->group(function () {
 
         Route::get('', Adresse::class)->name("adresse");
