@@ -9,10 +9,8 @@ use Filament\Forms;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 use Filament\Forms\Components\Grid;
-use Illuminate\Support\Facades\Validator;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
-use Illuminate\Validation\ValidationException;
 
 
 
@@ -69,7 +67,7 @@ class ProfilePass extends Component implements Forms\Contracts\HasForms
         ];
     }
 
-    public function submit(): void
+    public function submit()
     {
         $state = $this->form->getState();
         $user = User::find(auth()->id());
@@ -79,6 +77,7 @@ class ProfilePass extends Component implements Forms\Contracts\HasForms
             ->title(__('Password changed successfully'))
             ->success()
             ->send();
+        return redirect(request()->header('Referer'));
     }
 
     public function render(): View

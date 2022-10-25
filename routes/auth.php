@@ -28,9 +28,6 @@ Route::middleware('guest')->group(function () {
 
         Route::get('step-three', 'createStepThree')->name('register.step.three');
         Route::post('step-three', 'storeStepThree')->name('register.step.three.post');
-
-        Route::get('step-four', 'createStepFour')->name('register.step.four');
-        Route::post('step-four', 'storeStepFour')->name('register.step.four.post');
     });
 
 

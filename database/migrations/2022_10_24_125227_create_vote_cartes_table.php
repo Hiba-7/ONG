@@ -13,13 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cartes', function (Blueprint $table) {
+        Schema::create('vote_cartes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('numero')->unique()->nullable();
-            $table->date('date_delivrance')->nullable();
-            $table->date('date_expiration')->nullable();
-            $table->string('lieu_delivrance')->nullable();
-            $table->string('scan')->nullable();
+            $table->unsignedBigInteger('numero_inscription')->unique()->nullable();
+            $table->integer('numero_bureau')->nullable();
+            $table->string('lieu')->nullable();
+            $table->string('scan_vote')->nullable()->nullable();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cartes');
+        Schema::dropIfExists('vote_cartes');
     }
 };

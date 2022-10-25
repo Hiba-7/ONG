@@ -8,6 +8,8 @@ use App\Enums\UserRoleEnum;
 use App\Models\Poste;
 use App\Models\Cotisation;
 use App\Models\User;
+use App\Models\Carte;
+use App\Models\VoteCarte;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
@@ -40,6 +42,13 @@ class DatabaseSeeder extends Seeder
             'email' => 'b@c.com',
         ]);
 
+        Carte::factory(1)->create([
+            'user_id' => 1
+        ]);
+
+        VoteCarte::factory(1)->create([
+            'user_id' => 1
+        ]);
         // // // User::find(1)->assignRole(UserRoleEnum::getAdminRoles());
 
         // create the rest of the users
