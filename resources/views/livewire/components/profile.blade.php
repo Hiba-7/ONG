@@ -3,7 +3,7 @@
 @if (!empty($errors->all()))
     <div x-data="{ display: false, }" class="pt-100 bg-white shadow overflow-hidden sm:rounded-lg">
     @else
-        <div x-data="{ display: true, }" class="pt-100 bg-white shadow overflow-hidden sm:rounded-lg">
+        <div x-data="{ display: false, }" class="pt-100 bg-white shadow overflow-hidden sm:rounded-lg">
 @endif
 
 <form method="POST" action="{{ route('profile.submit') }}" enctype="multipart/form-data">
@@ -52,16 +52,25 @@
 
 
     </div>
+
+    {{-- display information --}}
     <div x-show="display == true" x-cloak class="border-t border-gray-200 px-4 py-5 sm:p-0">
         <dl class="sm:divide-y sm:divide-gray-200">
             <x-profile-item :label="'Nom'" :content="$user->nom" />
             <x-profile-item :label="'Prénom'" :content="$user->prénom" />
-            <x-profile-item :label="'Numéro de téléphone'" :content="$user->téléphone" />
+            <x-profile-item :label="'Date naissance'" :content="$user->date_naissance" />
             <x-profile-item :label="'Adresse email'" :content="$user->email" />
             <x-profile-item :label="'Adresse'" :content="$user->adresse" />
+            <x-profile-item :label="'Adresse secondaire'" :content="$user->adresse_secondaire" />
+
+            {{-- pays --}}
+
+            <x-profile-item :label="'Département'" :content="$user->nom_departement" />
+            <x-profile-item :label="'Numéro de téléphone'" :content="$user->téléphone" />
             <x-profile-item :label="'Niveau etude'" :content="$user->niveau_etude" />
             <x-profile-item :label="'Etat social'" :content="$user->etat_social" />
-            <x-profile-item :label="'Adresse email'" :content="$user->email" />
+            <x-profile-item :label="'Derniere Fonction'" :content="$user->fonction" />
+            <x-profile-item :label="'Spécialité'" :content="$user->spécialité" />
             <div class="px-4 py-5 sm:px-6">
                 <h3 class="text-lg leading-6 font-medium text-gray-900">Information de carte d'identité</h3>
             </div>
@@ -100,15 +109,74 @@
         </dl>
     </div>
 
+    {{-- the form to update information --}}
     <div x-show="display == false" x-cloak class="border-t border-gray-200 px-4 py-5 sm:p-0">
         <dl class="sm:divide-y sm:divide-gray-200">
-            <x-profile-item :input="true" :name="'nom'" :label="'Nom'" :content="$user->nom" />
-            <x-profile-item :input="true" :name="'prénom'" :label="'Prénom'" :content="$user->prénom" />
-            <x-profile-item :input="true" :name="'téléphone'" :label="'Numéro de téléphone'" :content="$user->téléphone" />
+            <x-profile-item :label="'Nom'" :content="$user->nom" />
+            <x-profile-item :label="'Prénom'" :content="$user->prénom" />
+            <x-profile-item :label="'Date naissance'" :content="$user->date_naissance" />
             <x-profile-item :input="true" :name="'email'" :label="'Adresse email'" :content="$user->email" />
             <x-profile-item :input="true" :name="'adresse'" :label="'Adresse'" :content="$user->adresse" />
+            <x-profile-item :input="true" :name="'adresse_secondaire'" :label="'Adresse secondaire'" :content="$user->adresse_secondaire" />
+            <div class="grid grid-cols-2 grid-rows-2" x-data="{ ...getPays(), ...getWilayas(), ...getCommunes(), selectedPays: null, selectedWilaya: null }" x-init="fetchAllPays">
+                {{-- pays --}}
+                <label class="pl-6 flex items-center text-sm font-medium text-gray-500" for="pays">Pays</label>
+                <div class="w-full">
+                    <x-select :value="old('pays_id')" x-model="selectedPays" required class="block mt-1 w-full"
+                        :identity="__('pays_id')">
+                        <option value="">Selectioner votre Pays</option>
+                        <template x-for="p in pays">
+                            <option x-bind:value="p.id" x-bind:selected='' x-text="p.nom">
+                            </option>
+                        </template>
+                    </x-select>
+                    @error('pays_id')
+                        <span class="text-red-500">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                {{-- wilayas --}}
+                <template x-if="selectedPays == 4">
+                    <div class="w-full" x-init="fetchAllWilayas">
+                        <x-label for="wilaya_id" :value="__('Wilaya')" />
+                        <x-select :value="old('wilaya_id')" required class="block mt-1 w-full" :identity="'wilaya_id'"
+                            x-model="selectedWilaya">
+                            <option value="">Selectioner votre wilaya</option>
+                            <template x-for="wilaya in wilayas">
+                                <option x-bind:value="wilaya.id" x-text="wilaya.id + ' . ' + wilaya.nom">
+                                </option>
+                            </template>
+                        </x-select>
+                        @error('wilaya_id')
+                            <span class="text-red-500">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </template>
+
+                {{-- communes --}}
+                <template x-if="selectedPays == 4">
+                    <div class="w-full" x-data="getCommunes(selectedWilaya)"
+                        x-effect="() => fetchCommunesByWilayaId(selectedWilaya)">
+                        <x-label for="commune_id" :value="__('Commune')" />
+                        <x-select :value="old('commune_id')" required class="block mt-1 w-full" :identity="'commune_id'">
+                            <option value="">Selectioner votre commune</option>
+                            <template x-for="commune in communes">
+                                <option x-bind:value="commune.id" x-text="commune.nom"></option>
+                            </template>
+                        </x-select>
+                        @error('commune_id')
+                            <span class="text-red-500">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </template>
+            </div>
+            <x-profile-item :input="true" :name="'nom_departement'" :label="'Département'" :content="$user->nom_departement" />
+            <x-profile-item :input="true" :name="'téléphone'" :label="'Numéro de téléphone'" :content="$user->téléphone" />
             <x-profile-item :input="true" :name="'niveau_etude'" :label="'Niveau etude'" :content="$user->niveau_etude" />
             <x-profile-item :input="true" :name="'etat_social'" :label="'Etat social'" :content="$user->etat_social" />
+            <x-profile-item :input="true" :name="'fonction'" :label="'Derniere Fonction'" :content="$user->fonction" />
+            <x-profile-item :input="true" :name="'spécialité'" :label="'Spécialité'" :content="$user->spécialité" />
+
             <div class="px-4 py-5 sm:px-6">
                 <h3 class="text-lg leading-6 font-medium text-gray-900">Information de carte d'identité</h3>
             </div>
@@ -234,6 +302,36 @@
         if (scan) {
             vote_scan.src = URL.createObjectURL(scan)
 
+        }
+    }
+
+    function getPays() {
+        return {
+            pays: [],
+            fetchAllPays() {
+                axios.get('/api/pays')
+                    .then(res => this.pays = res.data)
+            }
+        }
+    }
+
+    function getWilayas() {
+        return {
+            wilayas: [],
+            fetchAllWilayas() {
+                axios.get('/api/wilayas')
+                    .then(response => this.wilayas = response.data)
+            }
+        }
+    }
+
+    function getCommunes(wilaya_id) {
+        return {
+            communes: [],
+            fetchCommunesByWilayaId(wilaya_id) {
+                axios.get(`/api/wilayas/${wilaya_id}/communes`)
+                    .then(response => this.communes = response.data)
+            }
         }
     }
 </script>
