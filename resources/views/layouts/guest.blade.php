@@ -20,7 +20,7 @@
     @livewireStyles
 </head>
 
-<body class="h-full overflow-y-auto">
+<body class="h-screen overflow-auto">
     {{-- padding is passed in the slot if the view requires some padding --}}
     <div class="p-{{ $padding }} grid grid-cols-8 place-items-start font-sans antialiased h-full bg-gray-100 gap-2">
         {{ $slot }}

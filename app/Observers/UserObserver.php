@@ -29,11 +29,14 @@ class UserObserver
 
         $user->assignRole(UserRoleEnum::ADHERENT_SIMPLE->value);
 
-        $carte = new Carte();
-        $user->carte()->save($carte);
-
-        $vote_carte = new VoteCarte();
-        $user->vote_carte()->save($vote_carte);
+        if (!isset($user->carte)) {
+            $carte = new Carte();
+            $user->carte()->save($carte);
+        }
+        if (!isset($user->vote_carte)) {
+            $vote_carte = new VoteCarte();
+            $user->vote_carte()->save($vote_carte);
+        }
     }
 
     /**
@@ -44,7 +47,10 @@ class UserObserver
      */
     public function updated(User $user)
     {
-        //
+        if ($user->pays_id != 4) {
+            $user->commune_id = null;
+            $user->saveQuietly();
+        }
     }
 
     /**

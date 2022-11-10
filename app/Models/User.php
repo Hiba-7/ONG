@@ -41,6 +41,42 @@ class User extends Authenticatable implements FilamentUser, HasName
         return $this->hasAnyRole(UserRoleEnum::getAdminRoles());
     }
 
+    public function Progress(): array
+    {
+        if (auth()->user()->pays_id != 4) {
+            $user = User::find(auth()->user()->id)->makeHidden(['adresse_secondaire', 'id', 'created_at', 'updated_at', 'commune_id', 'fondateur']);
+        } else {
+            $user = User::find(auth()->user()->id)->makeHidden(['adresse_secondaire', 'id', 'created_at', 'updated_at', 'fondateur']);
+        }
+        $user_data = $user->toArray();
+
+        $carte_data = $user->carte->makeHidden(['id', 'created_at', 'updated_at', 'user_id'])->toArray();
+        $vote_data = $user->vote_carte->makeHidden(['id', 'created_at', 'updated_at', 'user_id'])->toArray();
+
+        $is_incomplete = [
+            'vote_carte' => array_search(null, $vote_data) !== false,
+            'carte' => array_search(null, $carte_data) !== false
+        ];
+
+
+        $user_data = array_merge($user_data, $carte_data, $vote_data);
+        $progress = 0;
+        $left_out = array();
+        foreach ($user_data as $key => $value) {
+            if ($value != null) {
+                $progress = $progress + 10;
+            } else {
+                array_push($left_out, $key);
+            }
+        }
+        // dd($left_out);
+        $percentage = ($progress / (count($user_data) * 10)) * 100;
+        return [
+            'percentage' => round($percentage),
+            'is_incomplete' => $is_incomplete
+        ];
+    }
+
     protected $fillable = [
         'civilité',
         'nom',

@@ -18,5 +18,5 @@ class FormationWilaya extends Widget
 
         $this->formations = Formation::withcount('certifiés')->get();
     }
-    protected static string $view = 'filament.widgets.Formation-wilaya';
+    protected static string $view = 'filament.widgets.formation-wilaya';
 }

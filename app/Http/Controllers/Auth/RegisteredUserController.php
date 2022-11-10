@@ -159,6 +159,19 @@ class RegisteredUserController extends Controller
             }
         }
 
+        $carte_data = [
+            'numero' => $validatedData['numero'],
+            'date_delivrance' => $validatedData['date_delivrance'],
+            'lieu_delivrance' => $validatedData['lieu_delivrance'],
+            'date_expiration' => $validatedData['date_expiration'],
+
+        ];
+
+        $vote_carte_data = [
+            'numero_inscription' => $validatedData['numero_inscription'],
+            'numero_bureau' => $validatedData['numero_bureau'],
+            'lieu' => $validatedData['lieu'],
+        ];
 
 
 
@@ -166,25 +179,24 @@ class RegisteredUserController extends Controller
         $user->save();
 
         // UserObeserver will attach the latest simple cotisation to the user
+
         if ($request->file('scan')) {
             $file = $request->file('scan');
             $filename = time() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('images/id_cards'), $filename);
-            $validatedData['scan'] = $filename;
+            $carte_data['scan'] = $filename;
         }
 
         if ($request->file('scan_vote')) {
             $file = $request->file('scan_vote');
             $filename = time() . '.' . $file->getClientOriginalExtension();
             $file->move(public_path('images/vote_cards'), $filename);
-            $validatedData['scan_vote'] = $filename;
+            $vote_carte_data['scan_vote'] = $filename;
         }
 
-        $carte = new Carte($validatedData);
-        $user->carte()->save($carte);
+        $user->carte()->update($carte_data);
 
-        $vote_carte = new VoteCarte($validatedData);
-        $user->vote_carte()->save($vote_carte);
+        $user->vote_carte()->update($vote_carte_data);
 
 
 
