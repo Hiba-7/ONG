@@ -42,9 +42,9 @@ class DatabaseSeeder extends Seeder
             'email' => 'b@c.com',
         ]);
 
-        Carte::factory(10)->create([]);
+        Carte::factory(10)->create();
 
-        VoteCarte::factory(10)->create([]);
+        VoteCarte::factory(10)->create();
         // // // User::find(1)->assignRole(UserRoleEnum::getAdminRoles());
 
         // create the rest of the users
