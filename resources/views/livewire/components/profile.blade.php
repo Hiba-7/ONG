@@ -24,7 +24,7 @@
             @if ($is_incomplete['vote_carte'])
                 <x-tw.alerts.alert1 :message="'Carte Vote is unfinished'"></x-tw.alerts.alert1>
             @endif
-            {{ $user->commune_id }}
+            {{-- {{ $user->commune_id }} --}}
 
         </div>
         <div class="px-3 col-start-3 col-span-2 grid grid-cols-2 border-l border-gray-200">
