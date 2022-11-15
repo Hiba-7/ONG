@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "ext-gd": "*",
         "bezhansalleh/filament-language-switch": "^1.0",
         "codeat3/blade-codicons": "^1.26",
         "doctrine/dbal": "^3.4",
@@ -19,6 +20,9 @@
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
         "livewire/livewire": "^2.10",
+        "maatwebsite/excel": "^3.1",
+        "phpoffice/phpspreadsheet": "^1.18",
+        "psr/simple-cache": "^2.0",
         "saade/filament-fullcalendar": "^1.4",
         "spatie/enum": "^3.13",
         "spatie/laravel-permission": "^5.5",

@@ -16,7 +16,7 @@
             <div class="flex gap-6 justify-center w-full mt-8">
                 <div class="flex-1">
                     <x-label for="numero" :value="__('Numero Carte Nationale')" />
-                    <x-input :value="old('numero')" id="numero" class="block mt-1 w-full" type="text" name="numero" />
+                    <x-input :value="old('numero')" id="numero" class="block mt-1 w-full" type="number" name="numero" />
                     @error('numero')
                         <span class="text-red-500">{{ $message }}</span>
                     @enderror
@@ -76,7 +76,7 @@
             <div class="flex gap-6 justify-center w-full mt-8">
                 <div class="flex-1">
                     <x-label for="numero_inscription" :value="__('Numero Carte Vote')" />
-                    <x-input :value="old('numero_inscription    ')" id="numero_inscription" class="block mt-1 w-full" type="text"
+                    <x-input :value="old('numero_inscription')" id="numero_inscription" class="block mt-1 w-full" type="number"
                         name="numero_inscription" />
                     @error('numero_inscription')
                         <span class="text-red-500">{{ $message }}</span>
