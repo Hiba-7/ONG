@@ -1,12 +1,12 @@
 <x-mail::message>
-# Introduction
+    # Introduction
 
-The body of your message.
+    We look forward to communicating more with you. For more information visit our website.
 
-<x-mail::button :url="''">
-Button Text
-</x-mail::button>
+    <x-mail::button :url="'http://localhost:8000/'">
+        Button Text
+    </x-mail::button>
 
-Thanks,<br>
-{{ config('app.name') }}
+    Thanks,<br>
+    {{ config('app.name') }}
 </x-mail::message>
