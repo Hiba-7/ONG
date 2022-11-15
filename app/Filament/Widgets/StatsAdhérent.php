@@ -19,7 +19,7 @@ class StatsAdhérent extends BaseWidget
 
 
 
-            Card::make('Homme', DB::table('users')
+            Card::make('Hommes', DB::table('users')
                 ->where([
                     ['etat_profile_courant', UserEtatProfileEnum::ADHERENT->value],
                     ['civilité', UserCiviliteEnum::MR->value],
@@ -28,7 +28,7 @@ class StatsAdhérent extends BaseWidget
 
 
 
-            Card::make('Femme', DB::table('users')
+            Card::make('Femmes', DB::table('users')
                 ->where([
                     ['etat_profile_courant', UserEtatProfileEnum::ADHERENT->value],
                     ['civilité', UserCiviliteEnum::MME->value],

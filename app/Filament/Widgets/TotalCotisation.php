@@ -19,7 +19,9 @@ class TotalCotisation extends BaseWidget
     public function mount()
     {
         // get the paiements that were created this year
-        $paiements = Paiement::whereYear('created_at', now()->year)->get();
+        $paiements = Paiement::whereHas('cotisation', function ($query) {
+            $query->whereYear('année', now()->year);
+        })->get();
         $this->paiements_count = $paiements->count();
         foreach ($paiements as $paiement) {
             $this->montant_total += $paiement->cotisation_total;
@@ -39,12 +41,13 @@ class TotalCotisation extends BaseWidget
         $percentage_non_payé = $this->montant_total > 0 ? round($this->montant_dette / $this->montant_total * 100) : 0;
 
         return [
+            Card::make('', null)->description('Cotisations total'),
             Card::make('Assiettes de cotisations', money($this->montant_total, 'DZD'))
                 ->description($this->paiements_count),
             Card::make('Recouveremnt', money($this->montant_payé, 'DZD'))
-                ->description($percentage_payé . '%'),
+                ->description($percentage_payé . '%')->color('success'),
             Card::make('Dettes', money($this->montant_dette, 'DZD'))
-                ->description($percentage_non_payé . '%'),
+                ->description($percentage_non_payé . '%')->color('danger'),
         ];
     }
 }

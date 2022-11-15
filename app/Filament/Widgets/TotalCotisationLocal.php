@@ -20,7 +20,9 @@ class TotalCotisationLocal extends BaseWidget
 
     public function mount()
     {
-        $paiements = Paiement::whereYear('created_at', now()->year)->localCotisation()->get();
+        $paiements = Paiement::whereHas('cotisation', function ($query) {
+            $query->whereYear('année', now()->year);
+        })->localCotisation()->get();
         $this->paiements_count = $paiements->count();
         foreach ($paiements as $paiement) {
             $this->montant_total += $paiement->cotisation_total;
