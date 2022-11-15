@@ -6,10 +6,11 @@ use Filament\Pages\Page;
 use Filament\Forms;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\FileUpload;
-use Dacastro4\LaravelGmail\Services\Message\Mail;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UserMail;
+use Maatwebsite\Excel\Facades\Excel;
 
 use App\Imports\UsersImport;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Models\User;
 
 
@@ -49,7 +50,7 @@ class Importation extends Page implements Forms\Contracts\HasForms
         $fields = array();
         $imported_users = array();
         $imported_user = array();
-        $i = 0;
+        // $emails = array();
         foreach ($users_arr[0] as $key => $user) {
             if ($key == 0) {
                 $fields = $user;
@@ -61,16 +62,14 @@ class Importation extends Page implements Forms\Contracts\HasForms
             }
         }
         foreach ($imported_users as $key => $user) {
-            $user = new User($user);
+            $user    = new User($user);
+            // array_push($emails, $user['email']);
             $user->save();
-            if ($user['email'] == 'davinci.smartcraft@gmail.com') {
-                $mail = new Mail;
-                $mail->to('davinci.smartcraft@gmail.com');
-                $mail->subject("Jeel Jadid");
-                $mail->message("Nrapi min lgalb ana");
-                $mail->send();
-            }
+            // if ($user['email'] == 'davinci.smartcraft@gmail.com') {
+            //     Mail::to($user['email'])->send(new UserMail($user['email']));
+            // }
         }
+        // dd($emails);
         dd($imported_users);
         return true;
     }
